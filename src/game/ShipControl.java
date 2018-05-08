@@ -33,12 +33,13 @@ public class ShipControl implements KeyListener, MouseListener{
     ArrayList<Aliens> aliens;
     int delay = 10;
     int mx, my;
-    
-    private final int[][] pos = {
+    int numOfAliens = 10+(int)(Math.random()*15);
+    private int[][] pos = new int[numOfAliens][2];
+    /*private final int[][] pos = {
         {27,28}, {113,26}, {442,59}, {447,59}, {652,59},
         {278,17}, {418,23}, {333,13}, {592,17}, {726,17},
         {846,32}, {927,21}, {962,29}, {963,30}
-    };
+    };*/
 
     
     public ShipControl(Stage stage){
@@ -56,7 +57,7 @@ public class ShipControl implements KeyListener, MouseListener{
     
     public void initAliens(){
         aliens = new ArrayList<>();
-
+        initPos();
         for (int[] p : pos) {
             aliens.add(new Aliens(p[0], p[1]));
         }
@@ -155,7 +156,14 @@ public class ShipControl implements KeyListener, MouseListener{
             }
         }
     }
-    
+
+    void initPos(){
+        for(int r = 0; r < numOfAliens; r++){
+            pos[r][0] = 30+(int)(Math.random()*(Game.w -30));
+            pos[r][1] = -(int)(Math.random()*500);
+        }
+
+    }
     
     void blast(Aliens alien, Spaceship ss){
         ImageIcon fire = new ImageIcon("images/blast2.gif");
