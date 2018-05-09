@@ -15,6 +15,7 @@ public class Aliens extends Sprite {
 
     private final int INITIAL_Y = 0;
     int dx = 0;
+    MovementThread mt = new MovementThread();
     public Aliens(int x, int y) {
         super(x, y);
 
@@ -42,12 +43,36 @@ public class Aliens extends Sprite {
             dx = 1;
 
         }
-        if((int)(Math.random()*1000)%33 == 0){
+
+        /*if((int)(Math.random()*1000)%33 == 0){
             dx = 1;
         } else if((int)(Math.random()*1000)%29 == 0){
             dx = -1;
-        }
+        }*/
         x += dx;
         y += 1;
+    }
+}
+
+class MovementThread implements Runnable{
+    Aliens a;
+    void go(Aliens a){
+        this.a = a;
+        Thread t = new Thread(this);
+        t.start();
+    }
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                int limit = 500 + (int) (Math.random() * 2000);
+                a.dx = 1;
+                Thread.sleep(limit);
+                a.dx = -1;
+                Thread.sleep(limit);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

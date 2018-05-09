@@ -61,6 +61,9 @@ public class ShipControl implements KeyListener, MouseListener{
         for (int[] p : pos) {
             aliens.add(new Aliens(p[0], p[1]));
         }
+        for (Aliens a : aliens) {
+            a.mt.go(a);
+        }
     }
     
     void setMissileProperties(int x, int y) {
