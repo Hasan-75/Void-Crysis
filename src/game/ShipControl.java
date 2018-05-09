@@ -33,7 +33,7 @@ public class ShipControl implements KeyListener, MouseListener{
     ArrayList<Aliens> aliens;
     int delay = 10;
     int mx, my;
-    int numOfAliens = 10+(int)(Math.random()*15);
+    int numOfAliens = 10+(int)(Math.random()*25);
     private int[][] pos = new int[numOfAliens][2];
     /*private final int[][] pos = {
         {27,28}, {113,26}, {442,59}, {447,59}, {652,59},
@@ -163,7 +163,7 @@ public class ShipControl implements KeyListener, MouseListener{
     void initPos(){
         for(int r = 0; r < numOfAliens; r++){
             pos[r][0] = 30+(int)(Math.random()*(Game.w -30));
-            pos[r][1] = -(int)(Math.random()*500);
+            pos[r][1] = -(int)(Math.random()*700);
         }
 
     }

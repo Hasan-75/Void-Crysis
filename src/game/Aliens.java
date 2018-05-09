@@ -13,12 +13,15 @@ import java.awt.Dimension;
  */
 public class Aliens extends Sprite {
 
-    private final int INITIAL_Y = 0;
+    //private final int INITIAL_Y = 0;
+
+    int inPos[] = new int[2];
     int dx = 0;
     MovementThread mt = new MovementThread();
     public Aliens(int x, int y) {
         super(x, y);
-
+        inPos[0] = x;
+        inPos[1] = y;
         initAlien();
     }
 
@@ -26,13 +29,13 @@ public class Aliens extends Sprite {
 
         loadImage("images/alien.png");
         Dimension d = this.getDefaultDimension();
-        this.setImageDimensions(d);
+          this.setImageDimensions(d);
     }
 
     public void move() {
 
         if (y > Game.h) {
-            y = INITIAL_Y;
+            y = inPos[1];
 
         }
         if (x > Game.w - 30) {
@@ -65,9 +68,10 @@ class MovementThread implements Runnable{
     public void run() {
         while (true) {
             try {
-                int limit = 500 + (int) (Math.random() * 2000);
+                int limit = 500 + (int) (Math.random() * 3000);
                 a.dx = 1;
                 Thread.sleep(limit);
+                limit = 500 + (int) (Math.random() * 3000);
                 a.dx = -1;
                 Thread.sleep(limit);
             } catch (InterruptedException e) {

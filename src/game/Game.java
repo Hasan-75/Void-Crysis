@@ -5,6 +5,7 @@
  */
 package game;
 
+
 import javax.swing.JFrame;
 
 /**
@@ -13,23 +14,26 @@ import javax.swing.JFrame;
  */
 public class Game extends JFrame{
     
-    static int w = 1200, h = 600;
+    static int w , h ;
     public Game(){
         init();
     }
     
     final void init(){
+        
+        setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH);
         setSize(w, h);
         setLayout(null);
+        setTitle("Void Crysis");
         //add(new SP());
-        add(new Stage());
+        add(new Stage(this));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
     
     
-    public static void main(String[] args) {
+    public static void startGame() {
         // TODO code application logic here
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

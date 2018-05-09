@@ -30,10 +30,12 @@ public class Stage extends JPanel implements ActionListener{
     ShipControl control;
     Spaceship sps;
     JLabel leftAliens;
+    Game g;
     int left = 0;
     String lblstr = "  Aliens Left: ";
     int x, y, dx, dy, w, h, initial_bgY = Game.h-4500, bgY = initial_bgY, dBgy = 1;
-    public Stage(){
+    public Stage(Game g){
+        this.g = g;
         makeStage();
         setProperties();
     }
@@ -90,12 +92,12 @@ public class Stage extends JPanel implements ActionListener{
         //System.out.println(image.getHeight(this));
         //System.out.println(image.getWidth(this));
         g.drawImage(image, 0, bgY, Game.w , image.getHeight(this), this);
-        if(bgY > -0){
+        if(bgY > 0){
             bgY = initial_bgY;
 
         }
         //g.drawImage(spaceship, x, y, w, h, this);
-        System.out.println();
+
         if(sps.isVisible())
             g.drawImage(spaceship, x, y, w, h, this);
         drawMissiles(g);
@@ -113,7 +115,9 @@ public class Stage extends JPanel implements ActionListener{
         control.checkCollisions(new Rectangle(x, y, w, h));
         repaint();
         if(left == 0 || !(control.ship.isVisible()) ){
+            control.timer.stop();
             gameOver();
+            
         }
     }
 
@@ -124,17 +128,25 @@ public class Stage extends JPanel implements ActionListener{
             public void run(){
                 try {
                     Thread.sleep(500);
-                    leftAliens.setText("    Game Over");
+                    if(left == 0)
+                        leftAliens.setText("    Congrats!!!");
+                    else
+                        leftAliens.setText("    Game Over");
                     leftAliens.setLocation((Game.w-150)/2,(Game.h-80)/2);
                     control.aliens.clear();
                     control.ship.setVisible(false);
                     repaint();
-                    control.timer.stop();
+                    //control.timer.stop();
+                    Thread.sleep(1500);
+                    g.dispose();
+                    StartPan.makeStartPanel();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Stage.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }.start();
+        
+        
     }
     
     private void drawMissiles(Graphics g) {
